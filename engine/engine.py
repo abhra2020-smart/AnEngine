@@ -4,7 +4,7 @@ from pygame.locals import *
 global e_colorkey
 e_colorkey = (255,255,255)
 
-def set_global_colorkey(colorkey):
+def change_global_colorkey_to(colorkey):
     global e_colorkey
     e_colorkey = colorkey
 
@@ -19,7 +19,7 @@ def collision_test(object_1,object_list):
     return collision_list
 
 # 2d physics object
-class physics_obj(object):
+class PhysicsObject(object):
    
     def __init__(self,x,y,x_size,y_size):
         self.width = x_size
@@ -65,9 +65,9 @@ class physics_obj(object):
         return collision_types
 
 # 3d collision detection
-# todo: add 3d physics-based movement
+# TODO: add 3d physics-based movement
 
-class cuboid(object):
+class Cuboid(object):
     
     def __init__(self,x,y,z,x_size,y_size,z_size):
         self.x = x
@@ -95,7 +95,7 @@ class cuboid(object):
 # entity stuff
 
 def simple_entity(x,y,e_type):
-    return entity(x,y,1,1,e_type)
+    return Entity(x,y,1,1,e_type)
 
 def flip(img,boolean=True):
     return pygame.transform.flip(img,boolean,False)
@@ -105,7 +105,7 @@ def blit_center(surf,surf2,pos):
     y = int(surf2.get_height()/2)
     surf.blit(surf2,(pos[0]-x,pos[1]-y))
  
-class entity(object):
+class Entity(object):
     global animation_database, animation_higher_database
    
     def __init__(self,x,y,size_x,size_y,e_type): # x, y, size_x, size_y, type
@@ -279,9 +279,8 @@ def get_frame(ID):
  
 def load_animations(path):
     global animation_higher_database, e_colorkey
-    f = open(path + 'entity_animations.txt','r')
-    data = f.read()
-    f.close()
+    with open(path + 'entity_animations.txt','r') as f:
+        data = f.read()
     for animation in data.split('\n'):
         sections = animation.split(' ')
         anim_path = sections[0]
@@ -331,7 +330,7 @@ def load_particle_images(path):
         except:
             pass
 
-class particle(object):
+class Particle(object):
 
     def __init__(self,x,y,particle_type,motion,decay_rate,start_frame,custom_color=None):
         self.x = x
@@ -363,11 +362,11 @@ class particle(object):
 
 # other useful functions
 
-def swap_color(img,old_c,new_c):
+def swap_color(img, old_colorkey, new_colorkey):
     global e_colorkey
-    img.set_colorkey(old_c)
+    img.set_colorkey(old_colorkey)
     surf = img.copy()
-    surf.fill(new_c)
+    surf.fill(new_colorkey)
     surf.blit(img,(0,0))
     surf.set_colorkey(e_colorkey)
     return surf
