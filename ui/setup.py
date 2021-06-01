@@ -1,5 +1,3 @@
-#UPLOAD TOKEN: pypi-AgEIcHlwaS5vcmcCJDhjNzkyN2M4LWUyMzAtNDUyOS1hYmIwLWFmNzkyYmYyZjU4YwACJXsicGVybWlzc2lvbnMiOiAidXNlciIsICJ2ZXJzaW9uIjogMX0AAAYgJBdlQwk9_JaryTkJVjfH9uXv6q5iOzWYlHFCkDop5fw
-
 from distutils.core import setup, Extension
 from glob import glob
 
